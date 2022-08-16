@@ -1,21 +1,36 @@
 <section>
   <div class="board">
     <div class="board__scores">
-      <app-score></app-score>
-      <app-highest-scores></app-highest-scores>
+      <app-score [currentScore]="userScore$ | async"></app-score>
+      <app-highest-scores [highestScore]="userBestScore$ | async">
+      </app-highest-scores>
     </div>
 
     <div class="board__game">
+      <ng-template [ngIf]="startGame$ | async">
+        <div class="board__game-group">
+          <div class="board__moles"></div>
+          <div class="board__moles"></div>
+          <div class="board__moles"></div>
+        </div>
+        <div class="board__game-group">
+          <div class="board__moles"></div>
+          <div class="board__moles"></div>
+          <div class="board__moles"></div>
+        </div>
+      </ng-template>
+
       <button
         class="board__button"
         (click)="startGame()"
-        *ngIf="(startGame$ | async) === false">
+        *ngIf="(startGame$ | async) === false"
+      >
         Start Game
       </button>
     </div>
 
     <div class="board__timer">
-      <app-timer></app-timer>
+      <app-timer [timer]="timer"></app-timer>
     </div>
   </div>
 </section>

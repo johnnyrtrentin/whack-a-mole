@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input
+} from '@angular/core';
 
 @Component({
   selector: 'app-highest-scores',
   templateUrl: './highest-scores.component.html',
   styleUrls: ['./highest-scores.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HighestScoresComponent implements OnInit {
-  highestScore: number;
-  
-  constructor() {
-    this.highestScore = 0;
-  }
+export class HighestScoresComponent {
+  @Input() highestScore!: number | null;
 
-  ngOnInit(): void {}
+  constructor() {}
 }

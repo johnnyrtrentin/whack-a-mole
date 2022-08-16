@@ -1,18 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input
+} from '@angular/core';
 
 @Component({
   selector: 'app-timer',
   templateUrl: './timer.component.html',
-  styleUrls: ['./timer.component.scss']
+  styleUrls: ['./timer.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TimerComponent implements OnInit {
-  time: number;
+export class TimerComponent{
+
+  @Input() timer!: number;
 
   constructor() {
-    this.time = 30;
-   }
-
-  ngOnInit(): void {
   }
-
 }

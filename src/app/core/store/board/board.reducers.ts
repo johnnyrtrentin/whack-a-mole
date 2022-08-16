@@ -18,8 +18,8 @@ export const GameInitialState: GameState = {
 
 export const GameReducer = createReducer(
   GameInitialState,
-  on(StartGame, (state) => ({ ...state, startGame: true })),
-  on(StopGame, (state) => ({ ...state, startGame: false })),
+  on(StartGame, (state) => ({ ...state, startGame: true, startTimer: true })),
+  on(StopGame, (state) => ({ ...state, startGame: false, startTimer: false })),
   on(StartTimer, (state) => ({ ...state, startTimer: true })),
   on(ResetTimer, (state) => ({ ...state, startTimer: false })),
   on(UpdateScore, (state, { value }) => ({

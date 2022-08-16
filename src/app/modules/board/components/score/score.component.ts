@@ -1,16 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-score',
   templateUrl: './score.component.html',
   styleUrls: ['./score.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ScoreComponent implements OnInit {
-  currentScore: number;
+export class ScoreComponent {
+  @Input() currentScore!: number | null;
 
-  constructor() {
-    this.currentScore = 0;
-  }
-
-  ngOnInit(): void {}
+  constructor() {}
 }
