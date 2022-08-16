@@ -1,0 +1,24 @@
+%flex-container-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.board {
+  height: 100vh;
+
+  @extend %flex-container-column;
+  justify-content: center;
+
+  &__scores {
+    margin-bottom: 10px;
+  }
+
+  &__game {
+    width: 100%;
+    height: 85%;
+
+    align-self: center;
+
+    background-color: gray;
+  }
+}
