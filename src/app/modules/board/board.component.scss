@@ -1,15 +1,19 @@
-%flex-container-column {
+%flex-container {
   display: flex;
+}
+
+%flex-column {
   flex-direction: column;
 }
 
 .board {
   height: 100vh;
 
-  @extend %flex-container-column;
+  @extend %flex-container, %flex-column;
   justify-content: center;
 
   &__scores {
+    @extend %flex-container, %flex-column;
     margin-bottom: 10px;
   }
 
@@ -17,8 +21,28 @@
     width: 100%;
     height: 85%;
 
+    @extend %flex-container;
     align-self: center;
+    justify-content: center;
 
     background-color: gray;
+  }
+
+  &__timer {
+    margin-top: 10px;
+
+    @extend %flex-container;
+    justify-content: flex-end;
+  }
+
+  &__button {
+    @extend %flex-container;
+
+    justify-content: center;
+    width: 150px;
+    height: 50px;
+
+    align-self: center;
+    align-items: center;
   }
 }

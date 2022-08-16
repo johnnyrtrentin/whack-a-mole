@@ -5,6 +5,17 @@
       <app-highest-scores></app-highest-scores>
     </div>
 
-    <div class="board__game"></div>
+    <div class="board__game">
+      <button
+        class="board__button"
+        (click)="startGame()"
+        *ngIf="(startGame$ | async) === false">
+        Start Game
+      </button>
+    </div>
+
+    <div class="board__timer">
+      <app-timer></app-timer>
+    </div>
   </div>
 </section>

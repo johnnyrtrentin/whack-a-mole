@@ -6,8 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./timer.component.scss']
 })
 export class TimerComponent implements OnInit {
+  time: number;
 
-  constructor() { }
+  constructor() {
+    this.time = 30;
+   }
 
   ngOnInit(): void {
   }
