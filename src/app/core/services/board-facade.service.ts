@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import {
   AppState,
+  ResetScore,
   selectHighScoreState,
   selectScoreState,
   selectStartGameState,
@@ -41,6 +42,9 @@ export class BoardFacadeService {
 
   stopGame(): void {
     this.store.dispatch(StopGame());
+  }
+  resetScore(): void {
+    this.store.dispatch(ResetScore());
   }
 
   updateScore(value: number): void {

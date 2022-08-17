@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil, withLatestFrom } from 'rxjs';
 import { BoardFacadeService } from 'src/app/core/services/board-facade.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { BoardFacadeService } from 'src/app/core/services/board-facade.service';
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],
 })
-export class BoardComponent implements OnInit {
+export class BoardComponent implements OnInit, OnDestroy {
   readonly startGame$: Observable<boolean>;
   readonly startTimer$: Observable<boolean>;
   readonly userScore$: Observable<number>;
@@ -17,6 +17,7 @@ export class BoardComponent implements OnInit {
   public timer: number;
 
   private clearInterval!: any;
+  private readonly observable$: Subject<void>;
 
   constructor(private readonly gameStoreService: BoardFacadeService) {
     this.startGame$ = this.gameStoreService.getGameState();
@@ -25,32 +26,61 @@ export class BoardComponent implements OnInit {
     this.userBestScore$ = this.gameStoreService.getHighScoreState();
 
     this.timer = 30;
+    this.observable$ = new Subject();
   }
 
   ngOnInit(): void {
     this.decreaseTimerHandler();
   }
 
+  ngOnDestroy(): void {
+    this.observable$.next();
+    this.observable$.complete();
+  }
+
   startGame(): void {
     this.gameStoreService.startGame();
+  }
+
+  molePointsHandler(visible: boolean) {
+    this.gameStoreService.updateScore(visible ? 1 : -1);
   }
 
   decreaseTimerHandler(): void {
     const ONE_SECOND_DELAY = 1_000;
     const FINISH_TIME = 0;
 
-    this.startTimer$.subscribe((startTime) => {
-      if (startTime) {
-        this.clearInterval = setInterval(() => {
-          if (this.timer !== FINISH_TIME) {
-            this.timer--;
-          } else if (this.timer === FINISH_TIME) {
-            this.timer = 30;
-            this.gameStoreService.stopGame();
-            clearInterval(this.clearInterval);
+    this.startTimer$
+      .pipe(takeUntil(this.observable$))
+      .subscribe((startTime) => {
+        if (startTime) {
+          this.clearInterval = setInterval(() => {
+            if (this.timer !== FINISH_TIME) {
+              this.timer--;
+            } else if (this.timer === FINISH_TIME) {
+              this.timer = 30;
+              this.finishGame();
+              clearInterval(this.clearInterval);
+            }
+          }, ONE_SECOND_DELAY);
+        }
+      });
+  }
+
+  finishGame(): void {
+    this.gameStoreService.stopGame();
+    this.gameStoreService
+      .getScoreState()
+      .pipe(withLatestFrom(this.gameStoreService.getHighScoreState()))
+      .subscribe(([score, highestScore]) => {
+        if (score) {
+          const newScore = score;
+
+          if (newScore > highestScore) {
+            this.gameStoreService.updateBestScore(newScore);
           }
-        }, ONE_SECOND_DELAY);
-      }
-    });
+        }
+      });
+    this.gameStoreService.resetScore();
   }
 }

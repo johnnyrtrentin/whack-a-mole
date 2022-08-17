@@ -1,0 +1,17 @@
+.mole {
+  display: flex;
+  flex-direction: row;
+
+  &__content {
+    display: flex;
+
+    width: 8em;
+    height: 8em;
+    border-radius: 5em;
+    background-color: azure;
+
+    &--active {
+      background-color: black;
+    }
+  }
+}

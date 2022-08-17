@@ -8,16 +8,7 @@
 
     <div class="board__game">
       <ng-template [ngIf]="startGame$ | async">
-        <div class="board__game-group">
-          <div class="board__moles"></div>
-          <div class="board__moles"></div>
-          <div class="board__moles"></div>
-        </div>
-        <div class="board__game-group">
-          <div class="board__moles"></div>
-          <div class="board__moles"></div>
-          <div class="board__moles"></div>
-        </div>
+        <app-moles (moleClicked)="molePointsHandler($event)"></app-moles>
       </ng-template>
 
       <button
