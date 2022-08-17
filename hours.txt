@@ -1,0 +1,18 @@
+- First hour:
+    - created the project with angular cli;
+    - installed  the NgRx framework;
+    - added hours.txt file;
+    - defined folder structured and created the necessary components;
+- Second hour:
+    - used facade design pattern service;
+    - created the main actions, selector and reducers;
+- Third hour:
+    - start structure the container component template;
+    - added the NgRx calls in facade service;
+    - used smart and dumb components design pattern;
+- Fourth hour:
+    - created the timer logic;
+    - created the score and highest score logic;
+    - created game over logic;
+    - created mole display and hide logic;
+
